@@ -1,4 +1,3 @@
-// --- Arquivo: model/Restaurante.java ---
 package AI_Pede.model;
 
 import java.util.ArrayList;

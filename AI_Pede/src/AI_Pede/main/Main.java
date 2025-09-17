@@ -1,13 +1,17 @@
-// --- Arquivo: main/Main.java ---
 package AI_Pede.main;
 
 import AI_Pede.model.*;
+// p importar todas as classes publicas de /model
 import java.time.LocalDate;
+// serve p representar uma data
 import java.time.format.DateTimeParseException;
+// serve p identificar que uma entrada de data ta no formato errado
 import java.util.InputMismatchException;
+// serve pra indentificar que uma entrada q era p ser numerica foi em texto
 import java.util.Scanner;
+// ler entradas
 
-public class Main {
+public class Main{
 
     private static final Restaurante restaurante = new Restaurante("AI Pede");
     private static final Scanner scanner = new Scanner(System.in);
