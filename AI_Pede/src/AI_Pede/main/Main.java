@@ -1,3 +1,4 @@
+// --- Arquivo: main/Main.java ---
 package AI_Pede.main;
 
 import AI_Pede.model.*;
@@ -15,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         TerminalUI.limparTela();
         System.out.println("\n" + TerminalUI.ANSI_YELLOW + "BEM-VINDO AO " + restaurante.getNome().toUpperCase() + "!" + TerminalUI.ANSI_RESET);
-        
+
         while (true) {
             if (caixaAtual == null) {
                 exibirMenuCaixaFechado();
@@ -39,24 +40,17 @@ public class Main {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    abrirCaixa();
-                    break;
-                case 2:
-                    gerenciarCardapio();
-                    break;
-                case 3:
-                    gerarRelatorioHistorico();
-                    break;
+                case 1: abrirCaixa(); break;
+                case 2: gerenciarCardapio(); break;
+                case 3: gerarRelatorioHistorico(); break;
                 case 9:
                     System.out.println("\nObrigado por usar o AI Pede!");
                     System.exit(0);
-                default:
-                    TerminalUI.exibirErro("Opção inválida.");
+                default: TerminalUI.exibirErro("Opção inválida.");
             }
         } catch (InputMismatchException e) {
             TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
-            scanner.nextLine(); // Limpa a entrada inválida para evitar loop infinito
+            scanner.nextLine();
         }
     }
 
@@ -72,38 +66,31 @@ public class Main {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    criarNovoCarrinho();
-                    break;
-                case 2:
-                    listarPedidosDoDia();
-                    break;
-                case 3:
-                    fecharCaixa();
-                    break;
-                default:
-                    TerminalUI.exibirErro("Opção inválida.");
+                case 1: criarNovoCarrinho(); break;
+                case 2: listarPedidosDoDia(); break;
+                case 3: fecharCaixa(); break;
+                default: TerminalUI.exibirErro("Opção inválida.");
             }
         } catch (InputMismatchException e) {
             TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
-            scanner.nextLine(); // Limpa a entrada inválida
+            scanner.nextLine();
         }
     }
-    
-    // MÉTODO ABRIR CAIXA (VERSÃO ORIGINAL - NÃO INSISTE NA DATA)
+
     private static void abrirCaixa() {
         TerminalUI.exibirCabecalho("ABERTURA DE CAIXA");
-        System.out.print("Digite a data de hoje (DD/MM/AAAA): ");
-        String dataInput = scanner.nextLine();
-        try {
-            String[] partes = dataInput.split("/");
-            LocalDate data = LocalDate.of(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]), Integer.parseInt(partes[0]));
-            // Altera o estado do programa
-            caixaAtual = new Caixa(data);
-            TerminalUI.exibirMensagem("Caixa aberto com sucesso para o dia " + data + "!");
-        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            TerminalUI.exibirErro("Formato de data inválido. Use DD/MM/AAAA.");
-            // Com esta versão, o programa voltará ao menu "Caixa Fechado" após o erro.
+        while (true) {
+            System.out.print("Digite a data de hoje (DD/MM/AAAA): ");
+            String dataInput = scanner.nextLine();
+            try {
+                String[] partes = dataInput.split("/");
+                LocalDate data = LocalDate.of(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]), Integer.parseInt(partes[0]));
+                caixaAtual = new Caixa(data);
+                TerminalUI.exibirMensagem("Caixa aberto com sucesso para o dia " + data + "!");
+                break;
+            } catch (Exception e) {
+                TerminalUI.exibirErro("Formato de data inválido. Tente novamente usando DD/MM/AAAA.");
+            }
         }
     }
 
@@ -111,15 +98,16 @@ public class Main {
         TerminalUI.exibirCabecalho("FECHAMENTO DE CAIXA");
         System.out.printf("Total de Pedidos no Dia: %d\n", caixaAtual.getPedidosDoDia().size());
         System.out.printf("Faturamento Final do Dia: R$ %.2f\n", caixaAtual.calcularFaturamentoTotal());
-        
+
         restaurante.adicionarCaixaAoHistorico(caixaAtual);
-        caixaAtual = null; // Altera o estado do programa para "Caixa Fechado"
+        caixaAtual = null;
         TerminalUI.exibirMensagem("\nCaixa fechado e adicionado ao histórico.");
+        System.out.print("\nPressione Enter para continuar...");
+        scanner.nextLine();
     }
 
     private static void gerenciarCardapio() {
         int opcao = 0;
-        // Laço while para manter o usuário neste menu
         while (opcao != 9) {
             TerminalUI.exibirCabecalho("GERENCIAR CARDÁPIO");
             System.out.println("1. Adicionar Item");
@@ -156,13 +144,19 @@ public class Main {
                         }
                         break;
                     case 3:
-                         TerminalUI.exibirCabecalho("CARDÁPIO ATUAL");
-                         if(restaurante.getCardapio().isEmpty()) System.out.println("Cardápio vazio.");
-                         else restaurante.getCardapio().forEach(item -> {
-                             System.out.println(item);
-                             TerminalUI.exibirSeparador();
-                         });
-                         break;
+                        TerminalUI.exibirCabecalho("CARDÁPIO ATUAL");
+                        if(restaurante.getCardapio().isEmpty()) {
+                            System.out.println("Cardápio vazio.");
+                        } else {
+                            restaurante.getCardapio().forEach(item -> {
+                                System.out.println(item);
+                                TerminalUI.exibirSeparador();
+                            });
+                        }
+                        // Pausa para o usuário ler o cardápio.
+                        System.out.print("\nPressione Enter para continuar...");
+                        scanner.nextLine();
+                        break;
                     case 9:
                         TerminalUI.exibirMensagem("Voltando ao menu anterior...");
                         break;
@@ -171,11 +165,11 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 TerminalUI.exibirErro("Entrada inválida. Por favor, use apenas números.");
-                scanner.nextLine(); // Limpa a entrada incorreta
+                scanner.nextLine();
             }
         }
     }
-    
+
     private static void criarNovoCarrinho() {
         Carrinho carrinho = new Carrinho();
         int opcao = 0;
@@ -189,14 +183,14 @@ public class Main {
                 carrinho.getItens().forEach(System.out::println);
             }
             TerminalUI.exibirSeparador();
-            
+
             System.out.println("1. Adicionar Item");
             System.out.println("2. Remover Item");
             System.out.println("3. Adicionar Observação");
             System.out.println("8. Finalizar Pedido");
             System.out.println("9. Cancelar Pedido");
             System.out.print("Escolha uma opção: ");
-            
+
             try {
                 opcao = scanner.nextInt();
                 scanner.nextLine();
@@ -261,7 +255,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
-                scanner.nextLine(); // Limpa a entrada inválida
+                scanner.nextLine();
             }
         }
     }
@@ -289,35 +283,52 @@ public class Main {
             }
 
             System.out.printf("\nValor final do pedido: R$ %.2f\n", carrinho.getValorFinal());
-            System.out.print("Forma de Pagamento (1-PIX, 2-Crédito, 3-Débito, 4-Dinheiro): ");
+            // Menu de pagamento simplificado.
+            System.out.print("Forma de Pagamento (1-PIX, 2-Cartão, 3-Dinheiro): ");
             int tipoPagamento = scanner.nextInt();
             scanner.nextLine();
-            
+
             Pagamento pagamento;
             switch (tipoPagamento) {
-                case 2: pagamento = new PagamentoCartao(carrinho.getValorFinal(), "Crédito"); break;
-                case 3: pagamento = new PagamentoCartao(carrinho.getValorFinal(), "Débito"); break;
-                case 4:
-                    System.out.print("Valor recebido em dinheiro: ");
-                    double valorRecebido = scanner.nextDouble();
-                    scanner.nextLine();
+                case 2: // Agora apenas "Cartão"
+                    pagamento = new PagamentoCartao(carrinho.getValorFinal());
+                    break;
+                case 3:
+                    // Laço para validar o valor pago em dinheiro.
+                    double valorRecebido;
+                    while (true) {
+                        System.out.print("Valor recebido em dinheiro: ");
+                        valorRecebido = scanner.nextDouble();
+                        scanner.nextLine();
+                        if (valorRecebido >= carrinho.getValorFinal()) {
+                            break; // Sai do loop se o valor for suficiente.
+                        } else {
+                            TerminalUI.exibirErro(String.format("Valor insuficiente. Faltam R$ %.2f", carrinho.getValorFinal() - valorRecebido));
+                        }
+                    }
                     pagamento = new PagamentoDinheiro(carrinho.getValorFinal(), valorRecebido);
                     break;
-                default: pagamento = new PagamentoPix(carrinho.getValorFinal()); break;
+                default: // PIX como padrão
+                    pagamento = new PagamentoPix(carrinho.getValorFinal());
+                    break;
             }
             carrinho.setPagamento(pagamento);
-            
+
             caixaAtual.adicionarPedido(carrinho);
             TerminalUI.exibirMensagem("Pedido Finalizado com Sucesso!");
             System.out.println(carrinho);
 
+            // Pausa para o usuário ver o recibo do pedido.
+            System.out.print("\nPressione Enter para continuar...");
+            scanner.nextLine();
+
         } catch (InputMismatchException e) {
             TerminalUI.exibirErro("Entrada inválida na finalização. O pedido não foi concluído.");
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine();
         }
     }
 
-   private static void listarPedidosDoDia() {
+    private static void listarPedidosDoDia() {
         TerminalUI.exibirCabecalho("PEDIDOS DO DIA: " + caixaAtual.getData());
         if (caixaAtual.getPedidosDoDia().isEmpty()) {
             System.out.println("Nenhum pedido foi finalizado hoje.");
@@ -327,20 +338,17 @@ public class Main {
                 TerminalUI.exibirSeparador();
             }
         }
-        
-        // NOVO: Pausa para o usuário antes de voltar ao menu.
+
         System.out.print("\nPressione Enter para continuar...");
-        scanner.nextLine(); // Aguarda o usuário pressionar Enter.
+        scanner.nextLine();
     }
-    
-   private static void gerarRelatorioHistorico() {
+
+    private static void gerarRelatorioHistorico() {
         TerminalUI.exibirCabecalho("RELATÓRIO HISTÓRICO");
         IRelatorio relatorio = new RelatorioCompletoDiario();
-        // Esta chamada agora é válida
         String relatorioGerado = relatorio.gerar(restaurante.getHistoricoDeCaixas());
         System.out.println(relatorioGerado);
-        
-        // Adicionando uma pausa aqui também para consistência.
+
         System.out.print("\nPressione Enter para continuar...");
         scanner.nextLine();
     }

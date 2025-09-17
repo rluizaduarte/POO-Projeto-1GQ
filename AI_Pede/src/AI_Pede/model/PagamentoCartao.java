@@ -1,16 +1,19 @@
 // --- Arquivo: model/PagamentoCartao.java ---
 package AI_Pede.model;
 
+/**
+ * Representa um pagamento via cartão.
+ * ALTERAÇÃO: A distinção entre Crédito e Débito foi removida para simplificar.
+ */
 public class PagamentoCartao extends Pagamento {
-    private String tipo; // "Crédito" ou "Débito"
 
-    public PagamentoCartao(double valor, String tipo) {
+    public PagamentoCartao(double valor) {
         super(valor);
-        this.tipo = tipo;
     }
 
     @Override
     public String getDetalhes() {
-        return "Pagamento via Cartão de " + this.tipo;
+        // A descrição agora é genérica.
+        return "Pagamento via Cartão";
     }
 }
