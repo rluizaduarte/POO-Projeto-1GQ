@@ -10,11 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Implementação da interface IRelatorio que gera um relatório completo
- * respondendo às 6 perguntas norteadoras do projeto, analisando o histórico
- * de todos os caixas fechados.
- */
 public class RelatorioCompletoDiario implements IRelatorio {
 
     @Override
@@ -24,11 +19,7 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n======================================================\n");
-        sb.append("      RELATÓRIO HISTÓRICO COMPLETO - AI PEDE\n");
-        sb.append("======================================================\n");
 
-        // Gerando cada seção do relatório chamando métodos auxiliares
         gerarRelatorioFinanceiroGeral(historicoCaixas, sb);
         gerarRelatorioDiaMaisMovimentado(historicoCaixas, sb);
         gerarRelatorioItensMaisPedidos(historicoCaixas, sb);
@@ -36,15 +27,11 @@ public class RelatorioCompletoDiario implements IRelatorio {
         gerarRelatorioPagamentoPorDia(historicoCaixas, sb);
         gerarRelatorioLucroSemanal(historicoCaixas, sb);
 
-        sb.append("\n======================================================\n");
         return sb.toString();
     }
 
-    /**
-     * Pergunta F: Qual o ticket médio? (e resumo financeiro)
-     */
     private void gerarRelatorioFinanceiroGeral(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ RESUMO FINANCEIRO GERAL ]\n").append(TerminalUI.ANSI_RESET);
+        sb.append(TerminalUI.formatarCabecalho("RESUMO FINANCEIRO GERAL"));
         double faturamentoTotal = 0;
         int totalPedidos = 0;
         for (Caixa caixa : historico) {
@@ -57,11 +44,8 @@ public class RelatorioCompletoDiario implements IRelatorio {
         sb.append(String.format("- Ticket Médio Geral: R$ %.2f por pedido\n", ticketMedio));
     }
 
-    /**
-     * Pergunta A: Quais dias da semana atingem o maior fluxo de pessoas?
-     */
     private void gerarRelatorioDiaMaisMovimentado(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ DIA DA SEMANA COM MAIOR FLUXO DE CLIENTES (EM MESAS) ]\n").append(TerminalUI.ANSI_RESET);
+        sb.append(TerminalUI.formatarCabecalho("DIA DA SEMANA COM MAIOR FLUXO"));
         Map<DayOfWeek, Integer> clientesPorDia = new HashMap<>();
         for (Caixa caixa : historico) {
             DayOfWeek dia = caixa.getData().getDayOfWeek();
@@ -81,11 +65,8 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
     }
 
-    /**
-     * Pergunta D: Quais itens do cardápio são mais pedidos?
-     */
     private void gerarRelatorioItensMaisPedidos(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ ITENS MAIS PEDIDOS (GERAL) ]\n").append(TerminalUI.ANSI_RESET);
+        sb.append(TerminalUI.formatarCabecalho("ITENS MAIS PEDIDOS (GERAL)"));
         Map<String, Integer> contagemItens = new HashMap<>();
         for (Caixa caixa : historico) {
             for (Carrinho c : caixa.getPedidosDoDia()) {
@@ -98,7 +79,6 @@ public class RelatorioCompletoDiario implements IRelatorio {
         if (contagemItens.isEmpty()) {
             sb.append("- Nenhum item foi vendido no período.\n");
         } else {
-            // Ordena o mapa pela quantidade (valor) e mostra os 5 itens mais pedidos
             contagemItens.entrySet().stream()
                     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                     .limit(5)
@@ -106,11 +86,8 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
     }
 
-    /**
-     * Pergunta E: Qual modalidade vende mais? (retirada, mesa)
-     */
     private void gerarRelatorioModalidadeGeral(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ MODALIDADE MAIS COMUM (GERAL) ]\n").append(TerminalUI.ANSI_RESET);
+        sb.append(TerminalUI.formatarCabecalho("MODALIDADE MAIS COMUM (GERAL)"));
         long mesas = historico.stream().flatMap(caixa -> caixa.getPedidosDoDia().stream())
                 .filter(c -> c.getModalidade() instanceof ModalidadeMesa).count();
         long retiradas = historico.stream().flatMap(caixa -> caixa.getPedidosDoDia().stream())
@@ -123,11 +100,8 @@ public class RelatorioCompletoDiario implements IRelatorio {
         else if (mesas > 0) sb.append("- Houve um empate entre as modalidades.\n");
     }
 
-    /**
-     * Pergunta B: Qual a forma de pagamento mais utilizada diariamente?
-     */
     private void gerarRelatorioPagamentoPorDia(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ FORMA DE PAGAMENTO MAIS USADA (POR DIA) ]\n").append(TerminalUI.ANSI_RESET);
+        sb.append(TerminalUI.formatarCabecalho("PAGAMENTO MAIS USADO (POR DIA)"));
         for (Caixa caixa : historico) {
             Map<String, Integer> contagemPagamentos = new HashMap<>();
             for (Carrinho c : caixa.getPedidosDoDia()) {
@@ -147,15 +121,10 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
     }
 
-    /**
-     * Pergunta C: Qual o lucro médio semanal?
-     */
     private void gerarRelatorioLucroSemanal(List<Caixa> historico, StringBuilder sb) {
-        sb.append(TerminalUI.ANSI_CYAN).append("\n[ LUCRO MÉDIO SEMANAL ]\n").append(TerminalUI.ANSI_RESET);
-        // Define o critério de semana (padrão do sistema)
+        sb.append(TerminalUI.formatarCabecalho("LUCRO MÉDIO SEMANAL"));
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
-        // Agrupa o lucro total pelo número da semana no ano
         Map<Integer, Double> lucroPorSemana = new HashMap<>();
         for (Caixa caixa : historico) {
             int semanaDoAno = caixa.getData().get(weekFields.weekOfWeekBasedYear());
@@ -172,9 +141,6 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
     }
 
-    /**
-     * Método auxiliar para traduzir o enum DayOfWeek para português.
-     */
     private String traduzirDiaDaSemana(DayOfWeek day) {
         switch (day) {
             case MONDAY: return "Segunda-feira";

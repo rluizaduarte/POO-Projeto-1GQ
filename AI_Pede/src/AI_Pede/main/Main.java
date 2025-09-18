@@ -1,25 +1,30 @@
+// --- Arquivo: main/Main.java ---
 package AI_Pede.main;
 
 import AI_Pede.model.*;
-// p importar todas as classes publicas de /model
 import java.time.LocalDate;
-// serve p representar uma data
 import java.time.format.DateTimeParseException;
-// serve p identificar que uma entrada de data ta no formato errado
 import java.util.InputMismatchException;
-// serve pra indentificar que uma entrada q era p ser numerica foi em texto
 import java.util.Scanner;
-// ler entradas
 
-public class Main{
+public class Main {
 
-    private static final Restaurante restaurante = new Restaurante("AI Pede");
+    private static Restaurante restaurante = null;
     private static final Scanner scanner = new Scanner(System.in);
     private static Caixa caixaAtual = null;
 
     public static void main(String[] args) {
+        // ALTERAÇÃO: A limpeza de tela inicial foi reintroduzida.
         TerminalUI.limparTela();
-        System.out.println("\n" + TerminalUI.ANSI_YELLOW + "BEM-VINDO AO " + restaurante.getNome().toUpperCase() + "!" + TerminalUI.ANSI_RESET);
+        System.out.println("\n" + TerminalUI.ANSI_GREEN + "BEM-VINDO AO SISTEMA AI PEDE!" + TerminalUI.ANSI_RESET);
+
+        System.out.print("Por favor, digite o nome do seu restaurante: ");
+        String nomeRestaurante = scanner.nextLine();
+        restaurante = new Restaurante(nomeRestaurante);
+
+        TerminalUI.exibirMensagem("Restaurante '" + restaurante.getNome() + "' carregado com sucesso!");
+        System.out.print("\nPressione Enter para continuar...");
+        scanner.nextLine();
 
         while (true) {
             if (caixaAtual == null) {
@@ -30,9 +35,11 @@ public class Main{
         }
     }
 
+    // O restante da classe Main não precisa de alterações.
+    // Cole o restante dos métodos (exibirMenuCaixaFechado, abrirCaixa, etc.) da versão anterior aqui.
     private static void exibirMenuCaixaFechado() {
-        System.out.println("\nO caixa está fechado.");
-        TerminalUI.exibirSeparador();
+        TerminalUI.exibirCabecalho(restaurante.getNome().toUpperCase() + " - CAIXA FECHADO");
+
         System.out.println("1. Abrir Caixa");
         System.out.println("2. Gerenciar Cardápio");
         System.out.println("3. Gerar Relatório Histórico");
@@ -157,7 +164,6 @@ public class Main{
                                 TerminalUI.exibirSeparador();
                             });
                         }
-                        // Pausa para o usuário ler o cardápio.
                         System.out.print("\nPressione Enter para continuar...");
                         scanner.nextLine();
                         break;
@@ -180,7 +186,7 @@ public class Main{
 
         while (opcao != 8 && opcao != 9) {
             TerminalUI.exibirCabecalho("MONTAGEM DO PEDIDO");
-            System.out.println(TerminalUI.ANSI_CYAN + "Itens atuais no carrinho:" + TerminalUI.ANSI_RESET);
+            System.out.println(TerminalUI.ANSI_GREEN + "Itens atuais no carrinho:" + TerminalUI.ANSI_RESET);
             if(carrinho.getItens().isEmpty()) {
                 System.out.println("Carrinho vazio.");
             } else {
@@ -287,32 +293,30 @@ public class Main{
             }
 
             System.out.printf("\nValor final do pedido: R$ %.2f\n", carrinho.getValorFinal());
-            // Menu de pagamento simplificado.
             System.out.print("Forma de Pagamento (1-PIX, 2-Cartão, 3-Dinheiro): ");
             int tipoPagamento = scanner.nextInt();
             scanner.nextLine();
 
             Pagamento pagamento;
             switch (tipoPagamento) {
-                case 2: // Agora apenas "Cartão"
+                case 2:
                     pagamento = new PagamentoCartao(carrinho.getValorFinal());
                     break;
                 case 3:
-                    // Laço para validar o valor pago em dinheiro.
                     double valorRecebido;
                     while (true) {
                         System.out.print("Valor recebido em dinheiro: ");
                         valorRecebido = scanner.nextDouble();
                         scanner.nextLine();
                         if (valorRecebido >= carrinho.getValorFinal()) {
-                            break; // Sai do loop se o valor for suficiente.
+                            break;
                         } else {
                             TerminalUI.exibirErro(String.format("Valor insuficiente. Faltam R$ %.2f", carrinho.getValorFinal() - valorRecebido));
                         }
                     }
                     pagamento = new PagamentoDinheiro(carrinho.getValorFinal(), valorRecebido);
                     break;
-                default: // PIX como padrão
+                default:
                     pagamento = new PagamentoPix(carrinho.getValorFinal());
                     break;
             }
@@ -322,7 +326,6 @@ public class Main{
             TerminalUI.exibirMensagem("Pedido Finalizado com Sucesso!");
             System.out.println(carrinho);
 
-            // Pausa para o usuário ver o recibo do pedido.
             System.out.print("\nPressione Enter para continuar...");
             scanner.nextLine();
 
