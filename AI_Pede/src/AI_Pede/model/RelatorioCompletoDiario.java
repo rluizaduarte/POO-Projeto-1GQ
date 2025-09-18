@@ -39,7 +39,7 @@ public class RelatorioCompletoDiario implements IRelatorio {
             totalPedidos += caixa.getPedidosDoDia().size();
         }
         double ticketMedio = (totalPedidos == 0) ? 0 : faturamentoTotal / totalPedidos;
-        sb.append(String.format("- Faturamento Acumulado: R$ %.2f\n", faturamentoTotal));
+        sb.append(String.format("\n- Faturamento Acumulado: R$ %.2f\n", faturamentoTotal));
         sb.append(String.format("- Total de Pedidos no Período: %d\n", totalPedidos));
         sb.append(String.format("- Ticket Médio Geral: R$ %.2f por pedido\n", ticketMedio));
     }
@@ -58,10 +58,10 @@ public class RelatorioCompletoDiario implements IRelatorio {
 
         Optional<Map.Entry<DayOfWeek, Integer>> maiorMovimento = clientesPorDia.entrySet().stream().max(Map.Entry.comparingByValue());
         if (maiorMovimento.isPresent() && maiorMovimento.get().getValue() > 0) {
-            sb.append(String.format("- O dia de maior movimento foi %s, com um total de %d clientes atendidos.\n",
+            sb.append(String.format("\n- %s, com um total de %d clientes atendidos.\n",
                     traduzirDiaDaSemana(maiorMovimento.get().getKey()), maiorMovimento.get().getValue()));
         } else {
-            sb.append("- Nenhum cliente em mesa registrado no período.\n");
+            sb.append("\n- Nenhum cliente em mesa registrado no período.\n");
         }
     }
 
@@ -77,12 +77,12 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
 
         if (contagemItens.isEmpty()) {
-            sb.append("- Nenhum item foi vendido no período.\n");
+            sb.append("\n- Nenhum item foi vendido no período.\n");
         } else {
             contagemItens.entrySet().stream()
                     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                     .limit(5)
-                    .forEach(entry -> sb.append(String.format("- %s: %d unidades\n", entry.getKey(), entry.getValue())));
+                    .forEach(entry -> sb.append(String.format("\n- %s: %d unidades\n", entry.getKey(), entry.getValue())));
         }
     }
 
@@ -93,7 +93,7 @@ public class RelatorioCompletoDiario implements IRelatorio {
         long retiradas = historico.stream().flatMap(caixa -> caixa.getPedidosDoDia().stream())
                 .filter(c -> c.getModalidade() instanceof ModalidadeRetirada).count();
 
-        sb.append(String.format("- Pedidos em Mesa: %d\n", mesas));
+        sb.append(String.format("\n- Pedidos em Mesa: %d\n", mesas));
         sb.append(String.format("- Pedidos para Retirada: %d\n", retiradas));
         if (mesas > retiradas) sb.append("- A modalidade preferida é MESA.\n");
         else if (retiradas > mesas) sb.append("- A modalidade preferida é RETIRADA.\n");
@@ -114,9 +114,9 @@ public class RelatorioCompletoDiario implements IRelatorio {
             }
             Optional<Map.Entry<String, Integer>> maisUsado = contagemPagamentos.entrySet().stream().max(Map.Entry.comparingByValue());
             if (maisUsado.isPresent()) {
-                sb.append(String.format("- No dia %s: %s\n", caixa.getData(), maisUsado.get().getKey()));
+                sb.append(String.format("\n- No dia %s: %s\n", caixa.getData(), maisUsado.get().getKey()));
             } else {
-                sb.append(String.format("- No dia %s: Nenhum pagamento registrado.\n", caixa.getData()));
+                sb.append(String.format("\n- No dia %s: Nenhum pagamento registrado.\n", caixa.getData()));
             }
         }
     }
@@ -133,11 +133,11 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
 
         if (lucroPorSemana.isEmpty()) {
-            sb.append("- Não há dados suficientes para calcular o lucro semanal.\n");
+            sb.append("\n- Não há dados suficientes para calcular o lucro semanal.\n");
         } else {
             double lucroTotal = lucroPorSemana.values().stream().mapToDouble(Double::doubleValue).sum();
             double lucroMedioSemanal = lucroTotal / lucroPorSemana.size();
-            sb.append(String.format("- O lucro médio por semana de operação foi de R$ %.2f\n", lucroMedioSemanal));
+            sb.append(String.format("\n- O lucro médio por semana de operação foi de R$ %.2f\n", lucroMedioSemanal));
         }
     }
 

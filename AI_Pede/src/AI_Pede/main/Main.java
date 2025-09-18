@@ -9,21 +9,24 @@ import java.util.Scanner;
 
 public class Main {
 
+    // A variável 'restaurante' agora é iniciada como 'null'.
+    // Ela será criada depois que o usuário fornecer o nome.
     private static Restaurante restaurante = null;
     private static final Scanner scanner = new Scanner(System.in);
     private static Caixa caixaAtual = null;
 
     public static void main(String[] args) {
-        // ALTERAÇÃO: A limpeza de tela inicial foi reintroduzida.
         TerminalUI.limparTela();
-        System.out.println("\n" + TerminalUI.ANSI_GREEN + "BEM-VINDO AO SISTEMA AI PEDE!" + TerminalUI.ANSI_RESET);
+        System.out.println("\n" + TerminalUI.ANSI_GREEN + "Bem-vindo(a) ao AI Pede!\n" + TerminalUI.ANSI_RESET);
 
-        System.out.print("Por favor, digite o nome do seu restaurante: ");
+        // Pergunta o nome do restaurante no início.
+        System.out.print("Nome do seu restaurante: ");
         String nomeRestaurante = scanner.nextLine();
+        // Cria o objeto Restaurante com o nome fornecido pelo usuário.
         restaurante = new Restaurante(nomeRestaurante);
 
-        TerminalUI.exibirMensagem("Restaurante '" + restaurante.getNome() + "' carregado com sucesso!");
-        System.out.print("\nPressione Enter para continuar...");
+        System.out.println("Restaurante '" + restaurante.getNome() + "' cadastrado.");
+        System.out.print("\nEnter para continuar...");
         scanner.nextLine();
 
         while (true) {
@@ -35,16 +38,14 @@ public class Main {
         }
     }
 
-    // O restante da classe Main não precisa de alterações.
-    // Cole o restante dos métodos (exibirMenuCaixaFechado, abrirCaixa, etc.) da versão anterior aqui.
     private static void exibirMenuCaixaFechado() {
-        TerminalUI.exibirCabecalho(restaurante.getNome().toUpperCase() + " - CAIXA FECHADO");
+        TerminalUI.exibirCabecalho(restaurante.getNome().toUpperCase() + " - CAIXA FECHado");
 
         System.out.println("1. Abrir Caixa");
         System.out.println("2. Gerenciar Cardápio");
         System.out.println("3. Gerar Relatório Histórico");
         System.out.println("9. Sair do Sistema");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("\nEscolha uma opção: ");
 
         try {
             int opcao = scanner.nextInt();
@@ -55,22 +56,24 @@ public class Main {
                 case 2: gerenciarCardapio(); break;
                 case 3: gerarRelatorioHistorico(); break;
                 case 9:
-                    System.out.println("\nObrigado por usar o AI Pede!");
+                    System.out.println("\nObrigada por usar o AI Pede!");
                     System.exit(0);
-                default: TerminalUI.exibirErro("Opção inválida.");
             }
         } catch (InputMismatchException e) {
-            TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
+            TerminalUI.limparTela();
+            TerminalUI.exibirErro("Entrada inválida. Digite um número.");
+            scanner.nextLine();
+            System.out.print("\nEnter para continuar...");
             scanner.nextLine();
         }
     }
 
     private static void exibirMenuCaixaAberto() {
         TerminalUI.exibirCabecalho("CAIXA ABERTO - " + caixaAtual.getData());
-        System.out.println("1. Criar Novo Pedido (Carrinho)");
+        System.out.println("1. Criar Novo Pedido");
         System.out.println("2. Listar Pedidos do Dia");
         System.out.println("3. Fechar Caixa");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("\nEscolha uma opção: ");
 
         try {
             int opcao = scanner.nextInt();
@@ -80,10 +83,12 @@ public class Main {
                 case 1: criarNovoCarrinho(); break;
                 case 2: listarPedidosDoDia(); break;
                 case 3: fecharCaixa(); break;
-                default: TerminalUI.exibirErro("Opção inválida.");
             }
         } catch (InputMismatchException e) {
-            TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
+            TerminalUI.limparTela();
+            TerminalUI.exibirErro("Entrada inválida. Digite um número.");
+            scanner.nextLine();
+            System.out.print("\nEnter para continuar...");
             scanner.nextLine();
         }
     }
@@ -97,10 +102,12 @@ public class Main {
                 String[] partes = dataInput.split("/");
                 LocalDate data = LocalDate.of(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]), Integer.parseInt(partes[0]));
                 caixaAtual = new Caixa(data);
-                TerminalUI.exibirMensagem("Caixa aberto com sucesso para o dia " + data + "!");
+                System.out.println("\n" + TerminalUI.ANSI_GREEN + "Caixa aberto com sucesso!" + TerminalUI.ANSI_RESET);
+                System.out.print("\nEnter para continuar...");
+                scanner.nextLine();
                 break;
             } catch (Exception e) {
-                TerminalUI.exibirErro("Formato de data inválido. Tente novamente usando DD/MM/AAAA.");
+                TerminalUI.exibirErro("Formato inválido. Use DD/MM/AAAA.\n");
             }
         }
     }
@@ -112,7 +119,7 @@ public class Main {
 
         restaurante.adicionarCaixaAoHistorico(caixaAtual);
         caixaAtual = null;
-        TerminalUI.exibirMensagem("\nCaixa fechado e adicionado ao histórico.");
+        System.out.println("\n" + TerminalUI.ANSI_GREEN + "Caixa fechado e adicionado ao histórico." + TerminalUI.ANSI_RESET);
         System.out.print("\nPressione Enter para continuar...");
         scanner.nextLine();
     }
@@ -124,8 +131,8 @@ public class Main {
             System.out.println("1. Adicionar Item");
             System.out.println("2. Remover Item");
             System.out.println("3. Listar Itens");
-            System.out.println("9. Voltar ao Menu Anterior");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("9. Voltar");
+            System.out.print("\nEscolha uma opção: ");
 
             try {
                 opcao = scanner.nextInt();
@@ -137,44 +144,54 @@ public class Main {
                         String nome = scanner.nextLine();
                         System.out.print("Descrição do item: ");
                         String desc = scanner.nextLine();
-                        System.out.print("Preço de venda (ex: 25.50): ");
+                        System.out.print("Preço de venda: ");
                         double preco = scanner.nextDouble();
-                        System.out.print("Custo de produção (ex: 10.25): ");
+                        System.out.print("Custo de produção: ");
                         double custo = scanner.nextDouble();
                         scanner.nextLine();
                         restaurante.adicionarItemCardapio(new ItemCardapio(nome, desc, preco, custo));
-                        TerminalUI.exibirMensagem("Item adicionado com sucesso!");
+                        System.out.println("\n" + TerminalUI.ANSI_GREEN + "Item adicionado com sucesso!" + TerminalUI.ANSI_RESET);
+                        System.out.print("\nEnter para continuar...");
+                        scanner.nextLine();
                         break;
                     case 2:
                         System.out.print("Digite o ID ou o NOME do item a ser removido: ");
                         String idOuNome = scanner.nextLine();
                         if (restaurante.removerItemCardapio(idOuNome)) {
-                            TerminalUI.exibirMensagem("Item removido com sucesso.");
+                            System.out.println("\n" + TerminalUI.ANSI_GREEN + "Item removido com sucesso!" + TerminalUI.ANSI_RESET);
                         } else {
+                            TerminalUI.limparTela();
                             TerminalUI.exibirErro("Item não encontrado.");
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                         }
                         break;
                     case 3:
                         TerminalUI.exibirCabecalho("CARDÁPIO ATUAL");
                         if(restaurante.getCardapio().isEmpty()) {
-                            System.out.println("Cardápio vazio.");
+                            TerminalUI.limparTela();
+                            TerminalUI.exibirErro("Cardápio vazio.");
                         } else {
                             restaurante.getCardapio().forEach(item -> {
                                 System.out.println(item);
-                                TerminalUI.exibirSeparador();
                             });
                         }
-                        System.out.print("\nPressione Enter para continuar...");
+                        System.out.print("\nEnter para continuar...");
                         scanner.nextLine();
                         break;
                     case 9:
                         TerminalUI.exibirMensagem("Voltando ao menu anterior...");
+                        System.out.print("\nEnter para continuar...");
+                        scanner.nextLine();
                         break;
                     default:
                         TerminalUI.exibirErro("Opção inválida.");
                 }
             } catch (InputMismatchException e) {
-                TerminalUI.exibirErro("Entrada inválida. Por favor, use apenas números.");
+                TerminalUI.limparTela();
+                TerminalUI.exibirErro("Entrada inválida. Digite um número.");
+                scanner.nextLine();
+                System.out.print("\nEnter para continuar...");
                 scanner.nextLine();
             }
         }
@@ -199,7 +216,7 @@ public class Main {
             System.out.println("3. Adicionar Observação");
             System.out.println("8. Finalizar Pedido");
             System.out.println("9. Cancelar Pedido");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("\nEscolha uma opção: ");
 
             try {
                 opcao = scanner.nextInt();
@@ -208,7 +225,10 @@ public class Main {
                 switch (opcao) {
                     case 1:
                         if(restaurante.getCardapio().isEmpty()){
-                            System.out.println("O cardápio está vazio. Adicione itens no menu principal.");
+                            TerminalUI.limparTela();
+                            TerminalUI.exibirErro("O cardápio está vazio. Adicione itens no menu principal.");
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                             break;
                         }
                         TerminalUI.exibirCabecalho("CARDÁPIO");
@@ -223,20 +243,31 @@ public class Main {
                             scanner.nextLine();
                             if(qtd > 0) {
                                 carrinho.adicionarItem(itemSelecionado, qtd);
-                                TerminalUI.exibirMensagem("Item adicionado!");
+                                System.out.println("\n" + TerminalUI.ANSI_GREEN + "Item adicionado ao carrinho com sucesso!" + TerminalUI.ANSI_RESET);;
+                                System.out.print("\nEnter para continuar...");
+                                scanner.nextLine();
                             } else {
                                 TerminalUI.exibirErro("Quantidade deve ser positiva.");
+                                System.out.print("\nEnter para continuar...");
+                                scanner.nextLine();
                             }
                         } else {
+                            TerminalUI.limparTela();
                             TerminalUI.exibirErro("ID de item inválido!");
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                         }
                         break;
                     case 2:
                         if (carrinho.getItens().isEmpty()){
-                            System.out.println("O carrinho está vazio.");
+                            TerminalUI.limparTela();
+                            TerminalUI.exibirErro("O carrinho está vazio.");
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                             break;
                         }
-                        System.out.println("\n--- Itens no Carrinho ---");
+                        TerminalUI.limparTela();
+                        System.out.println("\n" + TerminalUI.ANSI_GREEN + "Itens no carrinho" + TerminalUI.ANSI_RESET);
                         carrinho.getItens().forEach(item -> System.out.println(item.getItem()));
                         System.out.print("Digite o ID do item do cardápio que deseja remover: ");
                         int idParaRemover = scanner.nextInt();
@@ -247,24 +278,33 @@ public class Main {
                         System.out.print("Digite a observação: ");
                         String obs = scanner.nextLine();
                         carrinho.setObservacao(obs);
-                        TerminalUI.exibirMensagem("Observação adicionada.");
+                        TerminalUI.exibirMensagem("\n" + TerminalUI.ANSI_GREEN + "Observação adicionada." + TerminalUI.ANSI_RESET);
+                        System.out.print("\nEnter para continuar...");
+                        scanner.nextLine();
                         break;
                     case 8:
                         if (carrinho.getItens().isEmpty()) {
-                            TerminalUI.exibirErro("Não é possível finalizar um pedido vazio.");
+                            TerminalUI.limparTela();
+                            TerminalUI.exibirErro("Não é possível finalizar o pedido.");
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                             opcao = 0;
+                            break;
                         } else {
                             finalizarPedido(carrinho);
                         }
                         break;
                     case 9:
                         TerminalUI.exibirMensagem("Pedido cancelado.");
+                        System.out.print("\nEnter para continuar...");
+                        scanner.nextLine();
                         break;
-                    default:
-                        TerminalUI.exibirErro("Opção inválida.");
                 }
             } catch (InputMismatchException e) {
-                TerminalUI.exibirErro("Entrada inválida. Por favor, digite um número.");
+                TerminalUI.limparTela();
+                TerminalUI.exibirErro("Entrada inválida. Digite um número.");
+                scanner.nextLine();
+                System.out.print("\nEnter para continuar...");
                 scanner.nextLine();
             }
         }
@@ -273,16 +313,16 @@ public class Main {
     private static void finalizarPedido(Carrinho carrinho) {
         try {
             TerminalUI.exibirCabecalho("FINALIZAR PEDIDO");
-            System.out.print("Haverá desconto? Digite a porcentagem (ou 0 para nenhum): ");
+            System.out.print("Adicionar desconto\nDigite a porcentagem (0-100): ");
             double desconto = scanner.nextDouble();
             scanner.nextLine();
             carrinho.setPercentualDesconto(desconto);
 
-            System.out.print("\nQual a modalidade? (1-Mesa, 2-Retirada): ");
+            System.out.print("\nSelecionar modalidade\n1-Mesa | 2-Retirada: ");
             int tipoModalidade = scanner.nextInt();
             scanner.nextLine();
             if (tipoModalidade == 1) {
-                System.out.print("Quantas pessoas na mesa?: ");
+                System.out.print("Quantidade de pessoas na mesa: ");
                 int pessoas = scanner.nextInt();
                 scanner.nextLine();
                 carrinho.setModalidade(new ModalidadeMesa(pessoas));
@@ -293,7 +333,7 @@ public class Main {
             }
 
             System.out.printf("\nValor final do pedido: R$ %.2f\n", carrinho.getValorFinal());
-            System.out.print("Forma de Pagamento (1-PIX, 2-Cartão, 3-Dinheiro): ");
+            System.out.print("Selecione a Forma de Pagamento\n1-PIX | 2-Cartão | 3-Dinheiro: ");
             int tipoPagamento = scanner.nextInt();
             scanner.nextLine();
 
@@ -305,12 +345,13 @@ public class Main {
                 case 3:
                     double valorRecebido;
                     while (true) {
-                        System.out.print("Valor recebido em dinheiro: ");
+                        System.out.print("Valor em espécie recebido: ");
                         valorRecebido = scanner.nextDouble();
                         scanner.nextLine();
                         if (valorRecebido >= carrinho.getValorFinal()) {
                             break;
                         } else {
+                            TerminalUI.limparTela();
                             TerminalUI.exibirErro(String.format("Valor insuficiente. Faltam R$ %.2f", carrinho.getValorFinal() - valorRecebido));
                         }
                     }
@@ -323,14 +364,17 @@ public class Main {
             carrinho.setPagamento(pagamento);
 
             caixaAtual.adicionarPedido(carrinho);
-            TerminalUI.exibirMensagem("Pedido Finalizado com Sucesso!");
-            System.out.println(carrinho);
+            System.out.println("\n" + TerminalUI.ANSI_GREEN + "Pedido finalizado com sucesso!" + TerminalUI.ANSI_RESET);
+            System.out.println("\n" + carrinho);
 
-            System.out.print("\nPressione Enter para continuar...");
+            System.out.print("Pressione Enter para continuar...");
             scanner.nextLine();
 
         } catch (InputMismatchException e) {
+            TerminalUI.limparTela();
             TerminalUI.exibirErro("Entrada inválida na finalização. O pedido não foi concluído.");
+            scanner.nextLine();
+            System.out.print("\nEnter para continuar...");
             scanner.nextLine();
         }
     }
@@ -338,7 +382,11 @@ public class Main {
     private static void listarPedidosDoDia() {
         TerminalUI.exibirCabecalho("PEDIDOS DO DIA: " + caixaAtual.getData());
         if (caixaAtual.getPedidosDoDia().isEmpty()) {
-            System.out.println("Nenhum pedido foi finalizado hoje.");
+            TerminalUI.limparTela();
+            TerminalUI.exibirErro("Nenhum pedido foi finalizado hoje.");
+            scanner.nextLine();
+            System.out.print("\nEnter para continuar...");
+            scanner.nextLine();
         } else {
             for (Carrinho pedido : caixaAtual.getPedidosDoDia()) {
                 System.out.println(pedido);
