@@ -1,7 +1,3 @@
-Com certeza! Baseado na versão final e robusta do seu projeto, preparei um README.md completo, profissional e detalhado. O objetivo é não apenas descrever o projeto, mas também destacar as decisões de design e a aplicação dos conceitos de Programação Orientada a Objetos que você utilizou.
-Isto é o que mais impressiona um professor: ver que o aluno não só fez o código funcionar, mas entendeu os princípios por trás dele.
-Como Usar
-Copie e cole o texto abaixo no seu ficheiro README.md na raiz do seu repositório Git (rluizaduarte/poo-projeto-1gq/POO-Projeto-1GQ-6dee3a9f800a3e290f48c632aeeeacfffaac976a/README.md).
 🚀 AI Pede - Sistema de Gestão para Restaurantes
 Bem-vindo ao AI Pede, um sistema de ponto de venda (PDV) e gestão desenvolvido em Java, focado em fornecer insights estratégicos para restaurantes. Este projeto foi construído como parte da disciplina de Programação Orientada a Objetos, aplicando conceitos fundamentais de POO para criar uma solução robusta, flexível e extensível.
 O sistema opera via terminal e simula as operações diárias de um restaurante, desde a gestão do cardápio até o fecho do caixa, culminando na geração de relatórios analíticos.
