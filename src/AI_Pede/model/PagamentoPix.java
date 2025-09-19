@@ -1,4 +1,3 @@
-// --- Arquivo: model/PagamentoPix.java ---
 package AI_Pede.model;
 
 public class PagamentoPix extends Pagamento {

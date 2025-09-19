@@ -1,4 +1,3 @@
-// --- Arquivo: model/Carrinho.java ---
 package AI_Pede.model;
 
 import java.time.LocalDateTime;
@@ -6,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Representa um carrinho de compras que, ao ser finalizado, se torna um pedido.
- * Permite adicionar/remover itens, adicionar observações e aplicar descontos.
- */
 public class Carrinho {
     private int numero;
     private final List<ItemPedido> itens;
@@ -65,21 +60,18 @@ public class Carrinho {
         return this.custoTotal;
     }
 
-    // Setters...
     public void setObservacao(String observacao) { this.observacao = observacao; }
     public void setPercentualDesconto(double percentual) { this.percentualDesconto = percentual / 100.0; }
     public void setNumero(int numero) { this.numero = numero; }
     public void setModalidade(Modalidade modalidade) { this.modalidade = modalidade; }
     public void setPagamento(Pagamento pagamento) { this.pagamento = pagamento; }
     
-    // Getters...
     public List<ItemPedido> getItens() { return itens; }
     public Modalidade getModalidade() { return modalidade; }
     public Pagamento getPagamento() { return pagamento; }
 
     @Override
     public String toString() {
-        // ... (toString from previous response)
         StringBuilder sb = new StringBuilder();
         sb.append("--- Carrinho Finalizado (Pedido Nº: ").append(numero).append(") ---\n");
         if(modalidade != null) sb.append("Modalidade: ").append(modalidade.getDescricao()).append("\n");

@@ -1,10 +1,5 @@
-// --- Arquivo: model/ModalidadeRetirada.java ---
 package AI_Pede.model;
 
-/**
- * Representa um pedido para retirada no balcão.
- * Herda de Modalidade e adiciona dados específicos sobre o cliente.
- */
 public class ModalidadeRetirada extends Modalidade {
     private String nomeCliente;
 

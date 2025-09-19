@@ -1,4 +1,3 @@
-// --- Arquivo: model/Caixa.java ---
 package AI_Pede.model;
 
 import java.time.LocalDate;
@@ -6,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Caixa {
-    // ALTERADO: A data agora é final e definida no construtor.
     private final LocalDate data;
     private final List<Carrinho> pedidosDoDia;
     private int proximoNumeroPedido = 1;
 
-    // ALTERADO: O construtor agora recebe a data.
     public Caixa(LocalDate data) {
         this.data = data;
         this.pedidosDoDia = new ArrayList<>();
@@ -22,7 +19,6 @@ public class Caixa {
         this.pedidosDoDia.add(carrinho);
     }
 
-    // Métodos de cálculo permanecem os mesmos...
     public double calcularFaturamentoTotal() {
         return this.pedidosDoDia.stream().mapToDouble(Carrinho::getValorFinal).sum();
     }
@@ -31,7 +27,6 @@ public class Caixa {
         return this.pedidosDoDia.stream().mapToDouble(Carrinho::getCustoTotal).sum();
     }
     
-    // Getters
     public LocalDate getData() { return data; }
     public List<Carrinho> getPedidosDoDia() { return pedidosDoDia; }
 }

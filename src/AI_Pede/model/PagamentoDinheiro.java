@@ -1,4 +1,3 @@
-// --- Arquivo: model/PagamentoDinheiro.java ---
 package AI_Pede.model;
 
 public class PagamentoDinheiro extends Pagamento {

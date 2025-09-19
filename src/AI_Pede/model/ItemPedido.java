@@ -1,4 +1,3 @@
-// --- Arquivo: model/ItemPedido.java ---
 package AI_Pede.model;
 
 public class ItemPedido {
@@ -16,7 +15,6 @@ public class ItemPedido {
         }
     }
 
-    // Getters...
     public ItemCardapio getItem() { return item; }
     public int getQuantidade() { return quantidade; }
     public double getSubtotal() { return item.getPrecoVenda() * quantidade; }

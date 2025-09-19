@@ -1,4 +1,3 @@
-// --- Arquivo: model/RelatorioCompletoDiario.java ---
 package AI_Pede.model;
 
 import AI_Pede.main.TerminalUI;

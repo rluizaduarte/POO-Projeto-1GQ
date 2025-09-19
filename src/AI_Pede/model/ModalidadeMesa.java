@@ -1,10 +1,4 @@
-// --- Arquivo: model/ModalidadeMesa.java ---
 package AI_Pede.model;
-
-/**
- * Representa um pedido para consumo no restaurante.
- * Herda de Modalidade e adiciona dados específicos sobre a ocupação da mesa.
- */
 public class ModalidadeMesa extends Modalidade {
     private int quantidadePessoas;
 

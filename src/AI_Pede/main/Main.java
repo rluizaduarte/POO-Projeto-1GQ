@@ -1,4 +1,3 @@
-// --- Arquivo: main/Main.java ---
 package AI_Pede.main;
 
 import AI_Pede.model.*;
@@ -9,8 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    // A variável 'restaurante' agora é iniciada como 'null'.
-    // Ela será criada depois que o usuário fornecer o nome.
+
     private static Restaurante restaurante = null;
     private static final Scanner scanner = new Scanner(System.in);
     private static Caixa caixaAtual = null;
@@ -19,10 +17,8 @@ public class Main {
         TerminalUI.limparTela();
         System.out.println("\n" + TerminalUI.ANSI_GREEN + "Bem-vindo(a) ao AI Pede!\n" + TerminalUI.ANSI_RESET);
 
-        // Pergunta o nome do restaurante no início.
         System.out.print("Nome do seu restaurante: ");
         String nomeRestaurante = scanner.nextLine();
-        // Cria o objeto Restaurante com o nome fornecido pelo usuário.
         restaurante = new Restaurante(nomeRestaurante);
 
         System.out.println("Restaurante '" + restaurante.getNome() + "' cadastrado.");
