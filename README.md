@@ -16,17 +16,12 @@ O sistema opera via terminal e simula as operações diárias de um restaurante,
 
 O núcleo do sistema foi projetado para responder a perguntas de negócio cruciais, transformando dados operacionais em inteligência para o gestor do restaurante:
 
-a. Qual o dia da semana com o maior fluxo de pessoas?
-
-b. Qual a forma de pagamento mais utilizada diariamente?
-
-c. Qual o lucro médio semanal?
-
-d. Quais itens do cardápio são mais pedidos?
-
-e. Qual modalidade vende mais (retirada ou mesa)?
-
-f. Qual o ticket médio geral?
+* a. Qual o dia da semana com o maior fluxo de pessoas?
+* b. Qual a forma de pagamento mais utilizada diariamente?
+* c. Qual o lucro médio semanal?
+* d. Quais itens do cardápio são mais pedidos?
+* e. Qual modalidade vende mais (retirada ou mesa)?
+* f. Qual o ticket médio geral?
 
 ## 🏗️ Design e Arquitetura
 
