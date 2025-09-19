@@ -77,13 +77,14 @@ public class RelatorioCompletoDiario implements IRelatorio {
         }
 
         if (contagemItens.isEmpty()) {
-            sb.append("\n- Nenhum item foi vendido no período.\n");
+            sb.append("\n- Nenhum item foi vendido no período.");
         } else {
             contagemItens.entrySet().stream()
                     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                     .limit(5)
-                    .forEach(entry -> sb.append(String.format("\n- %s: %d unidades\n", entry.getKey(), entry.getValue())));
+                    .forEach(entry -> sb.append(String.format("\n- %s: %d unidades", entry.getKey(), entry.getValue())));
         }
+        System.out.println("\n");
     }
 
     private void gerarRelatorioModalidadeGeral(List<Caixa> historico, StringBuilder sb) {
@@ -114,10 +115,11 @@ public class RelatorioCompletoDiario implements IRelatorio {
             }
             Optional<Map.Entry<String, Integer>> maisUsado = contagemPagamentos.entrySet().stream().max(Map.Entry.comparingByValue());
             if (maisUsado.isPresent()) {
-                sb.append(String.format("\n- No dia %s: %s\n", caixa.getData(), maisUsado.get().getKey()));
+                sb.append(String.format("\n- No dia %s: %s", caixa.getData(), maisUsado.get().getKey()));
             } else {
-                sb.append(String.format("\n- No dia %s: Nenhum pagamento registrado.\n", caixa.getData()));
+                sb.append(String.format("\n- No dia %s: Nenhum pagamento registrado.", caixa.getData()));
             }
+            System.out.println("\n");
         }
     }
 

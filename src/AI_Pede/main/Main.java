@@ -120,7 +120,7 @@ public class Main {
         restaurante.adicionarCaixaAoHistorico(caixaAtual);
         caixaAtual = null;
         System.out.println("\n" + TerminalUI.ANSI_GREEN + "Caixa fechado e adicionado ao histórico." + TerminalUI.ANSI_RESET);
-        System.out.print("\nPressione Enter para continuar...");
+        System.out.print("\nEnter para continuar...");
         scanner.nextLine();
     }
 
@@ -159,6 +159,8 @@ public class Main {
                         String idOuNome = scanner.nextLine();
                         if (restaurante.removerItemCardapio(idOuNome)) {
                             System.out.println("\n" + TerminalUI.ANSI_GREEN + "Item removido com sucesso!" + TerminalUI.ANSI_RESET);
+                            System.out.print("\nEnter para continuar...");
+                            scanner.nextLine();
                         } else {
                             TerminalUI.limparTela();
                             TerminalUI.exibirErro("Item não encontrado.");
@@ -367,7 +369,7 @@ public class Main {
             System.out.println("\n" + TerminalUI.ANSI_GREEN + "Pedido finalizado com sucesso!" + TerminalUI.ANSI_RESET);
             System.out.println("\n" + carrinho);
 
-            System.out.print("Pressione Enter para continuar...");
+            System.out.print("Enter para continuar...");
             scanner.nextLine();
 
         } catch (InputMismatchException e) {
@@ -385,8 +387,6 @@ public class Main {
             TerminalUI.limparTela();
             TerminalUI.exibirErro("Nenhum pedido foi finalizado hoje.");
             scanner.nextLine();
-            System.out.print("\nEnter para continuar...");
-            scanner.nextLine();
         } else {
             for (Carrinho pedido : caixaAtual.getPedidosDoDia()) {
                 System.out.println(pedido);
@@ -394,7 +394,7 @@ public class Main {
             }
         }
 
-        System.out.print("\nPressione Enter para continuar...");
+        System.out.print("\nEnter para continuar...");
         scanner.nextLine();
     }
 
@@ -404,7 +404,7 @@ public class Main {
         String relatorioGerado = relatorio.gerar(restaurante.getHistoricoDeCaixas());
         System.out.println(relatorioGerado);
 
-        System.out.print("\nPressione Enter para continuar...");
+        System.out.print("\nEnter para continuar...");
         scanner.nextLine();
     }
 }
