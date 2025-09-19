@@ -1,18 +1,18 @@
-# 🚀 AI Pede - Sistema de Gestão para Restaurantes
+# AI Pede - Sistema de Gestão para Restaurantes
 
-Bem-vindo ao AI Pede, um sistema de ponto de venda (PDV) e gestão desenvolvido em Java, focado em fornecer insights estratégicos para restaurantes. Este projeto foi construído como parte da disciplina de Programação Orientada a Objetos, aplicando conceitos fundamentais de POO para criar uma solução robusta, flexível e extensível.
+Bem-vindo ao AI Pede, um sistema de gerenciamento de pedidos para restaurantes desenvolvido em Java, focado em fornecer insights estratégicos para restaurantes. Este projeto foi construído como parte da disciplina de Programação Orientada a Objetos, aplicando conceitos fundamentais de POO para criar uma solução robusta, flexível e extensível.
 
-O sistema opera via terminal e simula as operações diárias de um restaurante, desde a gestão do cardápio até o fecho do caixa, culminando na geração de relatórios analíticos.
+O sistema opera via terminal e simula as operações diárias de um restaurante, desde a gestão do cardápio até o fechamento de caixa, resultando na geração de relatórios analíticos.
 
-## ✨ Features Principais
+## Features Principais
 
-* **Gestão de Estado Dinâmica:** O sistema opera em dois estados distintos (Caixa Aberto / Caixa Fechado), oferecendo menus e funcionalidades contextuais para cada momento da operação.
+* **Gestão de Estado Dinâmica:** O sistema opera em dois estados distintos (Caixa Aberto/Caixa Fechado), oferecendo menus e funcionalidades contextuais para cada momento da operação.
 * **Cardápio Dinâmico:** Permite que o operador adicione, remova e liste os itens do cardápio em tempo de execução, sem necessidade de reiniciar o programa.
 * **Criação de Pedidos Interativa:** Utiliza um conceito de "Carrinho" que permite adicionar/remover itens, incluir observações e aplicar descontos antes de finalizar o pedido.
 * **Análise de Dados Históricos:** Armazena o registo de múltiplos dias de operação (caixas fechados), permitindo a geração de relatórios que analisam tendências ao longo do tempo.
 * **Interface de Terminal Rica:** Oferece uma experiência de utilizador limpa e organizada, com cabeçalhos padronizados, cores para ênfase e pausas estratégicas para melhor legibilidade.
 
-## 🎯 Perguntas Estratégicas Respondidas
+## Perguntas Estratégicas Respondidas
 
 O núcleo do sistema foi projetado para responder a perguntas de negócio cruciais, transformando dados operacionais em inteligência para o gestor do restaurante:
 
@@ -23,7 +23,7 @@ O núcleo do sistema foi projetado para responder a perguntas de negócio crucia
 * e. Qual modalidade vende mais (retirada ou mesa)?
 * f. Qual o ticket médio geral?
 
-## 🏗️ Design e Arquitetura
+## Design e Arquitetura
 
 O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos. A arquitetura é baseada em uma clara separação de responsabilidades, com um pacote `model` para as entidades de negócio e um pacote `main` para o controlo da execução e interface com o utilizador.
 
@@ -39,7 +39,7 @@ O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos.
 
 * **Separação de Responsabilidades (SoC):** A responsabilidade de formatar e exibir a interface do terminal foi extraída da classe `Main` e centralizada na classe `TerminalUI.java`. Graças a isso, alterações estéticas (como mudar a cor do sistema) puderam ser feitas modificando apenas um ficheiro, sem impactar a lógica de negócio.
 
-## ⚙️ Como Executar o Projeto
+## Como Executar o Projeto
 
 ### Pré-requisitos
 * Java Development Kit (JDK) versão 17 ou superior instalado e configurado no PATH do sistema.
@@ -61,7 +61,7 @@ O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos.
 3.  Localize o ficheiro `src/AI_Pede/main/Main.java`.
 4.  Clique com o botão direito sobre o ficheiro e selecione a opção "Run" (Executar).
 
-## 🗂️ Estrutura de Ficheiros
+## Estrutura de Ficheiros
 
 A estrutura do código-fonte está organizada da seguinte forma:
 
@@ -86,6 +86,6 @@ A estrutura do código-fonte está organizada da seguinte forma:
             ├── RelatorioCompletoDiario.java (Implementação do relatório estratégico)
             └── Restaurante.java          (Classe principal que agrega os dados)
         
-## 👥 Autores
+## Autores
 * Rielly Luiza
 * Camila Torquato
