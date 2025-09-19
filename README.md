@@ -10,11 +10,10 @@ O sistema opera via terminal e simula as operações diárias de um restaurante,
 * **Cardápio Dinâmico:** Permite que o operador adicione, remova e liste os itens do cardápio em tempo de execução, sem necessidade de reiniciar o programa.
 * **Criação de Pedidos Interativa:** Utiliza um conceito de "Carrinho" que permite adicionar/remover itens, incluir observações e aplicar descontos antes de finalizar o pedido.
 * **Análise de Dados Históricos:** Armazena o registo de múltiplos dias de operação (caixas fechados), permitindo a geração de relatórios que analisam tendências ao longo do tempo.
-* **Interface de Terminal Rica:** Oferece uma experiência de utilizador limpa e organizada, com cabeçalhos padronizados, cores para ênfase e pausas estratégicas para melhor legibilidade.
 
 ## Perguntas Estratégicas Respondidas
 
-O núcleo do sistema foi projetado para responder a perguntas de negócio cruciais, transformando dados operacionais em inteligência para o gestor do restaurante:
+O núcleo do sistema foi projetado para responder algumas perguntas estratégicas, são elas:
 
 * a. Qual o dia da semana com o maior fluxo de pessoas?
 * b. Qual a forma de pagamento mais utilizada diariamente?
@@ -25,11 +24,9 @@ O núcleo do sistema foi projetado para responder a perguntas de negócio crucia
 
 ## Design e Arquitetura
 
-O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos. A arquitetura é baseada em uma clara separação de responsabilidades, com um pacote `model` para as entidades de negócio e um pacote `main` para o controlo da execução e interface com o utilizador.
+O projeto foi modelado seguindo os pilares da POO. A arquitetura é baseada em uma clara separação de responsabilidades, com um pacote `model` para as entidades de negócio e um pacote `main` para o controlo da execução e interface com o utilizador.
 
 ### Principais Conceitos de POO Aplicados
-
-> A aplicação prática dos conceitos teóricos foi um pilar deste desenvolvimento, resultando num código de alta coesão e baixo acoplamento.
 
 * **Herança e Classes Abstratas:** As hierarquias de `Pagamento` e `Modalidade` são exemplos centrais. Criamos classes abstratas base (`Pagamento.java`, `Modalidade.java`) que definem um contrato comum, enquanto as classes filhas (`PagamentoPix.java`, `ModalidadeMesa.java`, etc.) fornecem as implementações específicas.
 
