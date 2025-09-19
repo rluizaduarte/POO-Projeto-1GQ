@@ -64,46 +64,27 @@ O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos.
 ## 🗂️ Estrutura de Ficheiros
 
 A estrutura do código-fonte está organizada da seguinte forma:
+
 └── src
-
 └── AI_Pede
-
 ├── main
-
 │   ├── Main.java                 (Controlador principal e loop da aplicação)
-
 │   └── TerminalUI.java           (Classe utilitária para a interface do terminal)
-
 └── model
-
 ├── Caixa.java                (Gere as operações de um dia)
-
 ├── Carrinho.java             (Modela um pedido/carrinho de compras)
-
 ├── IRelatorio.java           (Interface para geradores de relatório)
-
 ├── ItemCardapio.java         (Modela um item do menu)
-
 ├── ItemPedido.java           (Modela um item dentro de um carrinho)
-
 ├── Modalidade.java           (Classe abstrata para modalidades)
-
 ├── ModalidadeMesa.java       (Implementação para pedidos em mesa)
-
 ├── ModalidadeRetirada.java   (Implementação para pedidos de retirada)
-
 ├── Pagamento.java            (Classe abstrata para pagamentos)
-
 ├── PagamentoCartao.java
-
 ├── PagamentoDinheiro.java
-
 ├── PagamentoPix.java
-
 ├── RelatorioCompletoDiario.java (Implementação do relatório estratégico)
-
 └── Restaurante.java          (Classe principal que agrega os dados)
-
 
 ## 👥 Autores
 * Rielly Luiza
