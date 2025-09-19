@@ -65,8 +65,8 @@ O projeto foi modelado seguindo os pilares da Programação Orientada a Objetos.
 
 A estrutura do código-fonte está organizada da seguinte forma:
 
-└── src
-    └── AI_Pede
+# └── src
+#    └── AI_Pede
     ├── main
     │   ├── Main.java                 (Controlador principal e loop da aplicação)
     │   └── TerminalUI.java           (Classe utilitária para a interface do terminal)
